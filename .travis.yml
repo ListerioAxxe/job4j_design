@@ -5,6 +5,7 @@ jdk:
 
 sudo: false
 
+
 env:
   global:
     - CODECOV_TOKEN="f78e5a93-4610-4948-a3f5-041acafc421e"
@@ -20,3 +21,6 @@ notifications:
       - langua095@gmail.com
     on_success: never # default: change
     on_failure: always # default: always
+
+    script:
+      - mvn test -B
