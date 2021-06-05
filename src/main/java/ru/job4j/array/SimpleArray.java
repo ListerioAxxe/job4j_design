@@ -1,5 +1,6 @@
 package ru.job4j.array;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -9,9 +10,9 @@ public class SimpleArray<T> implements Iterable<T> {
     private Object[] array;
     private int size;
 
-    public SimpleArray(T[] array, int size) {
-        this.array = array;
-        this.size = size;
+    public SimpleArray(int capacity) {
+       array = new Object[capacity];
+       size = 0;
     }
 
     @Override
