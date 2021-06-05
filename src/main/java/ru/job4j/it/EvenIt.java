@@ -19,6 +19,7 @@ public class EvenIt implements Iterator {
             for (int i = index; i < numbers.length; i++) {
                 if (numbers[i] % 2 == 0) {
                     rsl = i;
+                    break;
                 }
             }
         }
