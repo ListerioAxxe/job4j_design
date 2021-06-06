@@ -7,11 +7,11 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
-    private Object[] array;
+    private T[] array;
     private int size;
 
-    public SimpleArray(int capacity) {
-       array = new Object[capacity];
+    public SimpleArray(T[] array) {
+       this.array = array;
        size = 0;
     }
 
@@ -25,6 +25,14 @@ public class SimpleArray<T> implements Iterable<T> {
         }
         SimpleArray<?> that = (SimpleArray<?>) o;
         return size == that.size && Arrays.equals(array, that.array);
+    }
+
+    @Override
+    public String toString() {
+        return "SimpleArray{"
+                + "array=" + Arrays.toString(array)
+                + ", size=" + size
+                + '}';
     }
 
     @Override
@@ -54,6 +62,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void remove(int index) {
+        checkIndex(index, size);
         System.arraycopy(array, index + 1, array, index, size - 1 - index);
         array[size - 1] = null;
         size--;
