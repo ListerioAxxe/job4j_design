@@ -3,17 +3,17 @@ package ru.job4j.it;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class EvenIt implements Iterator {
+public class EvenNumbersIterator implements Iterator<Integer> {
 
     private final int[] numbers;
-    private int index = 0;
-    private int indEven = validate(index);
+    private int nextPoint;
 
-    public EvenIt(final int[] numbers) {
+    public EvenNumbersIterator(final int[] numbers) {
         this.numbers = numbers;
+        nextPoint = nextEl(0);
     }
 
-    public int validate(int index) {
+    public int nextEl(int index) {
         int rsl = -1;
         if (numbers.length != 0) {
             for (int i = index; i < numbers.length; i++) {
@@ -28,14 +28,16 @@ public class EvenIt implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return indEven != -1;
+        return nextPoint != -1;
     }
 
     @Override
-    public Object next() {
+    public Integer next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return numbers[indEven++];
+        Integer element = numbers[nextPoint++];
+        nextPoint = nextEl(nextPoint);
+        return element;
     }
 }
