@@ -4,7 +4,6 @@ import org.hamcrest.core.Is;
 import org.junit.Test;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
