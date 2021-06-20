@@ -22,7 +22,7 @@ public class LogFilter {
        try (PrintWriter out = new PrintWriter(
                new BufferedOutputStream(new FileOutputStream(file)))) {
            for (var el : log) {
-               out.write(el + System.lineSeparator());
+               out.println(el);
            }
        } catch (Exception e) {
            e.printStackTrace();
