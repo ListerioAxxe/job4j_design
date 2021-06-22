@@ -8,7 +8,7 @@ public class EvenNumberFile {
             var rsl = new StringBuilder();
             int read;
             while ((read = in.read()) != -1) {
-                    rsl.append((char) read);
+                rsl.append((char) read);
             }
             String[] arr = rsl.toString().split(System.lineSeparator());
             for (var el : arr) {

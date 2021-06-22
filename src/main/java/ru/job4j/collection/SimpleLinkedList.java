@@ -1,9 +1,6 @@
 package ru.job4j.collection;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class SimpleLinkedList<E> implements List<E> {
        private int modCount = 0;
@@ -17,14 +14,14 @@ public class SimpleLinkedList<E> implements List<E> {
 
     @Override
     public void add(E value) {
-        Node<E> newNod = new Node<>(last, value, null);
-        Node<E> tail = last;
-        if (tail == null || size == 0) {
+        Node<E> l = last;
+        Node<E> newNod = new Node<>(l, value, null);
+        last = newNod;
+        if (l == null || size == 0) {
             first = newNod;
         } else {
-            last.next = newNod;
+            l.next = newNod;
         }
-        last = newNod;
         size++;
         modCount++;
     }

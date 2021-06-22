@@ -8,7 +8,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private static final float LOAD_FACTOR = 0.75f;
 
-    private int capacity = 8;
+    private int capacity;
     private int length = 16;
     private int countEl = 0;
     private int modCount;
