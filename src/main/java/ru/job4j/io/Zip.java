@@ -36,22 +36,14 @@ public class Zip {
         }
     }
 
-    public static void main(String[] args) {
-        if (args.length < 4) {
-            throw new IllegalArgumentException("Not enough arguments");
-        }
+    public static void main(String[] args) throws IOException {
         ArgsName argsName = ArgsName.of(args);
-        Path directorySource = Path.of(argsName.get("d"));
-        Predicate<Path> pr = x -> !x.toFile().getName().endsWith(argsName.get("e"));
-        Path directoryTarget = Path.of(argsName.get("o"));
-        List<Path> sources = null;
-        try {
-            sources = Search.search(pr, directorySource);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Predicate<Path> predicate = x -> !x.toFile().getName().endsWith(argsName.get("e"));
+        Path dirSource = Path.of(argsName.get("d"));
+        Path dirTarget = Path.of(argsName.get("o"));
+        List<Path> sources = Search.search(predicate, dirSource);
         Zip zip = new Zip();
-        zip.packFiles(sources, directoryTarget);
+        zip.packFiles(sources, dirTarget);
         new Zip().packSingleFile(
                 new File("./pom.xml"),
                 new File("./pom.zip")
