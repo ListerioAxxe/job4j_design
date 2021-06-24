@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 public class ConsoleChat {
     private final String path;
     private final String botAnswers;
-    private static final String OUT = "закончить";
-    private static final String STOP = "стоп";
-    private static final String CONTINUE = "продолжить";
+    private final String out = "закончить";
+    private final String stop = "стоп";
+    private final String continues = "продолжить";
     private List<String> answerList = null;
 
     public ConsoleChat(String path, String botAnswers) {
@@ -25,12 +25,12 @@ public class ConsoleChat {
             String botAnswer;
             List<String> chatLogs = new ArrayList<>();
             boolean stop = false;
-            while (!userQuest.equals(OUT)) {
+            while (!userQuest.equals(out)) {
                 chatLogs.add(userQuest);
-                if (userQuest.equals(STOP)) {
+                if (userQuest.equals(stop)) {
                     stop = true;
                 }
-                if (userQuest.equals(CONTINUE)) {
+                if (userQuest.equals(continues)) {
                     stop = false;
                 }
                 if (!stop) {
