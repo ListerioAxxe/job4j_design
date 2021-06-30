@@ -20,6 +20,18 @@ public class Adres {
         this.street = street;
     }
 
+    public int getBuild() {
+        return build;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
     @Override
     public String toString() {
         return "Adres{"

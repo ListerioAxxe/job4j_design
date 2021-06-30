@@ -2,6 +2,8 @@ package ru.job4j.io.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,7 +12,9 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @XmlRootElement(name = "citizen")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -36,6 +40,26 @@ public class Citizen {
         this.info = info;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public boolean isCovid() {
+        return covid;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String[] getInfo() {
+        return info;
+    }
+
     @Override
     public String toString() {
         return "Citizen{"
@@ -48,35 +72,47 @@ public class Citizen {
 
     public static void main(String[] args) throws Exception {
 
+        /**
+         *  JSONObject из json-строки строки
+         *  */
+
+        JSONObject jsonAdres = new JSONObject("{"
+                + "\"adres\":"
+                + "{"
+                + "\"build\":\"35\","
+                + "\"number\":\"51\","
+                + "\"street\":\"voroshilova\""
+                + "},"
+                + "}");
+
+        /**
+         *  JSONArray из ArrayList
+         */
+        List<String> list = new ArrayList<>();
+        list.add("Poproshaika");
+        list.add("Holost");
+        JSONArray jsonInfo = new JSONArray(list);
+
         Citizen citizen = new Citizen(
                 true, new Adres(35, 51, "Voroshilova"), 27, "Poproshaika", "Holost");
+
         /**
-         * сериализуем обьект в XML
-         * Получаем контекст для доступа к АПИ
-         * Создаем сериализатор
-         * Указываем, что нам нужно форматирование
-         * Сериализуем
+         *  JSONObject напрямую методом put
          */
-        JAXBContext context = JAXBContext.newInstance(Citizen.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml = "";
-
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(citizen, writer);
-            xml = writer.getBuffer().toString();
-            System.out.println(xml);
-        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sex", citizen.isCovid());
+        jsonObject.put("adres", jsonAdres);
+        jsonObject.put("age", citizen.getAge());
+        jsonObject.put("info", jsonInfo);
 
         /**
-        * Для десериализации нам нужно создать десериализатор
-        * // десериализуем
+        *  результат
         */
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(xml)) {
-            Citizen result = (Citizen) unmarshaller.unmarshal(reader);
-            System.out.println(result);
-        }
+        System.out.println(jsonObject.toString());
 
+        /**
+        *  обьект citizen в json строку
+        */
+        System.out.println(new JSONObject(citizen).toString());
     }
 }
