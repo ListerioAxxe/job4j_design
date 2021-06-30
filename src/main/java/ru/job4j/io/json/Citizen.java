@@ -3,14 +3,31 @@ package ru.job4j.io.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.*;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Arrays;
 
+@XmlRootElement(name = "citizen")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Citizen {
-    private static final long serialVersionUID = 1L;
-    private final Adres adres;
-    private final boolean covid;
-    private final int age;
-    private final String[] info;
+
+    @XmlAttribute
+    private static long serialVersionUID = 1L;
+    private Adres adres;
+    private boolean covid;
+    private int age;
+
+    @XmlElementWrapper(name = "info")
+    @XmlElement(name = "information")
+    private String[] info;
+
+    public Citizen() {
+    }
 
     public Citizen(boolean covid, Adres adres, int age, String...info) {
         this.covid = covid;
@@ -29,29 +46,37 @@ public class Citizen {
                 + '}';
     }
 
-    public static void main(String[] args) {
-        final Citizen citizen = new Citizen(
+    public static void main(String[] args) throws Exception {
+
+        Citizen citizen = new Citizen(
                 true, new Adres(35, 51, "Voroshilova"), 27, "Poproshaika", "Holost");
+        /**
+         * сериализуем обьект в XML
+         * Получаем контекст для доступа к АПИ
+         * Создаем сериализатор
+         * Указываем, что нам нужно форматирование
+         * Сериализуем
+         */
+        JAXBContext context = JAXBContext.newInstance(Citizen.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "";
 
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(citizen));
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(citizen, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        }
 
-        final String citizenJson =
-                "{"
-                   + "\"covid\":\"true\","
-                   + "\"adres\":"
-                   + "{"
-                        + "\"build\":\"35\","
-                        + "\"number\":\"51\","
-                        + "\"street\":\"voroshilova\""
-                        + "},"
-                   + "\"age\":\"27\","
-                   + "\"info\":"
-                   + "[\"Poproshaika\",\"Holost\"]"
-                + "}";
+        /**
+        * Для десериализации нам нужно создать десериализатор
+        * // десериализуем
+        */
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            Citizen result = (Citizen) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }
 
-        final Citizen citizenModificated = gson.fromJson(citizenJson, Citizen.class);
-        System.out.println(citizenModificated);
     }
-
 }
