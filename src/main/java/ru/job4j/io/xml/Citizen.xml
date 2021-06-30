@@ -1,0 +1,10 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+  <citizen>
+    <covid>true</covid>
+    <adres build="35" number="51" street="voroshilova"/>
+    <age>30</age>
+    <info>
+      <information>Poproshaika</information>
+      <information>Holost</information>
+    </info>
+</citizen>
