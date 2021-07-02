@@ -7,6 +7,9 @@ public class ParseArguments {
     private Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalArgumentException("Not valid key");
+        }
         return values.get(key);
     }
 
