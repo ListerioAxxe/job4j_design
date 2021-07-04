@@ -1,0 +1,22 @@
+create table humans(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table bar(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table humans_bars(
+    id serial primary key,
+    humans_id int references humans(id),
+	bar_id int references bar(id)
+);
+
+insert into humans(name) values ('Igor');
+insert into bar(name) values ('Cola_like');
+insert into humans_bars(humans_id, bar_id) VALUES (1, 1);
+select * from humans_bars where id in (select id from humans);
+
+

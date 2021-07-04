@@ -1,0 +1,20 @@
+create table bank_account(
+    id serial primary key,
+    name varchar(255),
+	number_bank int
+);
+
+create table human_user(
+    id serial primary key,
+    name varchar(255),
+	number_bank_id int references bank_account(id)
+);
+
+insert into bank_account(name, number_bank) values ('Alfa_bank', 5577);
+insert into human_user(name, number_bank_id) VALUES ('Ivan', 1);
+
+select * from human_user where id in (select id from bank_account);
+
+
+
+
