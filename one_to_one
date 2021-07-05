@@ -6,7 +6,7 @@ create table inn(
 create table human(
 	id serial primary key,
 	name varchar(255),
-	inn_id int references inn(id)
+	inn_id int references inn(id) unique
 );
 
 insert into inn(inn_number) values (55634);
