@@ -1,14 +1,6 @@
-create table rules_role(
+create table category(
  id serial primary key,
- name varchar(255),
- role_id int references role(id),
- rule_id int references rules(id)
-);
-
-create table users(
- id serial primary key,
- name varchar(255),
- role_id int references role(id)
+ name varchar(255)
 );
 
 create table role(
@@ -16,9 +8,21 @@ create table role(
  name varchar(255)
 );
 
+
 create table rules(
  id serial primary key,
  name varchar(255)
+);
+
+create table state(
+ id serial primary key,
+ name varchar(255)
+);
+
+create table users(
+ id serial primary key,
+ name varchar(255),
+ role_id int references role(id)
 );
 
 create table item(
@@ -42,13 +46,10 @@ create table attachs(
  item_id int references item(id)
 );
 
-create table state(
+create table rules_role(
  id serial primary key,
- name varchar(255)
-);
-
-create table category(
- id serial primary key,
- name varchar(255)
+ name varchar(255),
+ role_id int references role(id),
+ rule_id int references rules(id)
 );
 
