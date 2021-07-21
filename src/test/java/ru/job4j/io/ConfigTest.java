@@ -13,8 +13,8 @@ public class ConfigTest {
         String path = "./data/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"), is("Petr Arsentev"));
-        assertThat(config.value("surname"), is(Matchers.nullValue()));
+        assertThat(config.get("name"), is("Petr Arsentev"));
+        assertThat(config.get("surname"), is(Matchers.nullValue()));
     }
 
     @Test
@@ -22,8 +22,8 @@ public class ConfigTest {
         String path = "./data/pair_with_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"), is("Petr Arsentev"));
-        assertThat(config.value("surname"), is(Matchers.nullValue()));
+        assertThat(config.get("name"), is("Petr Arsentev"));
+        assertThat(config.get("surname"), is(Matchers.nullValue()));
     }
 
     @Test
@@ -31,6 +31,6 @@ public class ConfigTest {
         String path = "./data/pair_with_null.properties";
         Config config = new Config(path);
         config.load();
-        assertNull(config.value("name"));
+        assertNull(config.get("name"));
     }
 }

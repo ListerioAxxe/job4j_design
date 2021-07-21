@@ -27,7 +27,7 @@ public class Config {
         }
     }
 
-    public String value(String key) {
+    public String get(String key) {
         return values.get(key);
     }
 
