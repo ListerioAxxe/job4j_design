@@ -1,4 +1,4 @@
-create new table user(
+create table user(
  id serial primary key,
  name varchar(20),
  email varchar(30)
